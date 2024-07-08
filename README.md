@@ -2,7 +2,7 @@
 
    cd /opt
 
-   sudo git clone https://github.com/txurtxil/nagios/
+   sudo git clone https://github.com/txurtxil/nagiosGraf/
 
    cd nagios
    
