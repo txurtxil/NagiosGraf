@@ -50,9 +50,9 @@
                 Enable check plugins, Enable nsclient server, Enable NRPE server,insecure legacy
              4. Hay que editar el fichero C:\Program Files\NSClient++\nsclient.ini y poner "enabled" los checks 
 
-2. Creamos una carpeta donde alojaremos el fichero .cfg de maquina a monitorzar
+2. Creamos una carpeta donde alojaremos el fichero .cfg de maquinas a monitorzar
 
-   mkdir /opt/nagios/etc/objects/equipos
+   mkdir /opt/nagios/etc/servers
 
 3. copiamos la plantilla /opt/nagios/etc/objects/windows.cfg del equipo a minitorizar:
    
@@ -65,10 +65,10 @@
 
     nano  /opt/nagios/etc/nagios.cfg 
     
-Añadimos la línea que especifica el fichero de configuración el equipo windows que vamos a monitorizar
-debajo de la seccion "Definitions for monitoring a Windows machine" y salvamos:
+Le decimos use la siguiente carpeta y añada todos los ficheros a monitorizar (seran servidores y equipos) "You can also tell Nagios to process all config files with a .cfg" quitamos almoadilla
+y salvamos:
 
-        cfg_file=/opt/nagios/etc/objects/equipos/win01.cfg
+        cfg_dir=/opt/nagios/etc/servers
         
 6.Editamos el fichero donde se definen los comandos para nagios:
 
@@ -94,7 +94,9 @@ sudo docker-compose down
 
 sudo docker rmi  71c4992638a2 (poner Image ID: sudo docker image ls)
 
+## Para probar la configuracion de Nagios antes de aplicar las modificaciones en lso servidores:
 
+    nagios -v nagios.cfg
    
 
 
