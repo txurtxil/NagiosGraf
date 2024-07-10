@@ -194,7 +194,7 @@ sudo docker rmi  71c4992638a2 (poner Image ID: sudo docker image ls)
                   sudo docker restart nagios_nagios_1
 
 
-## Para Monitorizar SRV Windows XX  usaremos el agente nagios NCPA, mejo que el agente NSCP++ mismo procedimeinto que en linux y mismo fichero check de Nagios
+## Para Monitorizar SRV Windows XX  usaremos el agente nagios NCPA, mejor que el agente NSCP++ mismo procedimeinto que en linux y mismo fichero check de Nagios
 
             ncpa-X.X.X .exe
 
