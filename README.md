@@ -98,7 +98,7 @@ sudo docker rmi  71c4992638a2 (poner Image ID: sudo docker image ls)
 
     nagios -v nagios.cfg
 
-## Para Monitorizar SRV REL 6.X usaremos el agente nagios NCPA
+## Para Monitorizar SRV REL 6.X usaremos el agente nagios NCPA https://www.nagios.org/ncpa/archive.php
 
             -Bajar el agente ncpa-2.1.8.el6.x86_64.rpm,
             -instalarlo con rpm -vih ncpa-2.1.8.el6.x86_64.rpm
@@ -192,6 +192,13 @@ sudo docker rmi  71c4992638a2 (poner Image ID: sudo docker image ls)
                   Si todo ha ido ok reinciar nagios desde el host:
 
                   sudo docker restart nagios_nagios_1
+
+
+## Para Monitorizar SRV Windows XX  usaremos el agente nagios NCPA, mejo que el agente NSCP++ mismo procedimeinto que en linux y mismo fichero check de Nagios
+
+            ncpa-X.X.X .exe
+
+       
 
 
 
