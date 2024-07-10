@@ -97,7 +97,118 @@ sudo docker rmi  71c4992638a2 (poner Image ID: sudo docker image ls)
 ## Para probar la configuracion de Nagios antes de aplicar las modificaciones en lso servidores:
 
     nagios -v nagios.cfg
-   
+
+## Para Monitorizar SRV REL 6.X usaremos el agente nagios NCPA
+
+            -Bajar el agente ncpa-2.1.8.el6.x86_64.rpm,
+            -instalarlo con rpm -vih ncpa-2.1.8.el6.x86_64.rpm
+            -Efitamos el fichero de configuracion del agente para cambiar el toque generico "mytoken"
+               nano /usr/local/ncpa/etc/ncpa.cfg
+            -Podemos lanzar/reinicar este servicio con:
+                 service ncpa_listener restart
+            -Tenemos el servicio funcionado en la URL  
+                       https://localhost:5693/
+              si no hemos cambiado el token sera mytoken
+## Desde naguios el check a usar de libexec es check_ncpa.py
+
+               -Comando para saber el espacio usado de la unidad /mnt/datos del servidro RHEL 6.x:            
+               /opt/nagios/libexec/check_ncpa.py -H 172.16.44.72 -t mytoken -M 'disk/logical/|mnt|datos/used_percent' --warning 90 --critical 95
+                         OK: Used_percent was 15.50 % | 'used_percent'=15.50%;90;95;
+
+## Hablilitar los checks NCPA en Nagios: 
+
+                  -Editrar el fichero commands.cfg y añadir la siguiente linea:
+                  
+                         nano /opt/nagios/etc/objects/commands.cfg
+                           define command {
+                                        command_name    check_ncpa
+                                        command_line    $USER1$/check_ncpa.py -H $HOSTADDRESS$ $ARG1$
+                                          }
+                    -Añadimos los check para monitorizar Momeria, CPU, discos de un servidor RHEL 6.x
+
+                              nano /opt/nagios/etc/servers/equipoRHEL6x.cfg
+                           
+                           define host {
+                               host_name               equipoRHEL6x
+                               address                 172.16.44.72
+                               check_command           check_ncpa!-t 'mytoken' -P 5693 -M system/agent_version
+                               max_check_attempts      5
+                           }
+                           
+                           define service {
+                               use                     generic-service,graphed-service
+                               host_name               equipoRHEL6x
+                               service_description     CPU Usage
+                               check_command           check_ncpa!-t 'mytoken' -P 5693 -M cpu/percent -w 20 -c 40 -q 'aggregate=avg'
+                               max_check_attempts      5
+                           }
+                           
+                           
+                           define service {
+                               use                     generic-service,graphed-service
+                               host_name               equipoRHEL6x
+                               service_description     Memory Usage
+                               check_command           check_ncpa!-t 'mytoken' -P 5693 -M memory/virtual -w 50 -c 80 -u G
+                               max_check_attempts      5
+                           }
+                           
+                           
+                           define service {
+                               use                     generic-service,graphed-service
+                               host_name               equipoRHEL6x
+                               service_description     Process Count
+                               check_command           check_ncpa!-t 'mytoken' -P 5693 -M processes -w 150 -c 200
+                           }
+                           
+                           
+                           define service {
+                               use                     generic-service,graphed-service
+                               host_name               equipoRHEL6x
+                               service_description     Unidad de sistema Operativo
+                               check_command           check_ncpa!-t 'mytoken' -P 5693 -M 'disk/logical/|/used_percent' --warning 90 --critical 95
+                           }
+                           
+                           
+                           define service {
+                               use                     generic-service,graphed-service
+                               host_name               equipoRHEL6x
+                               service_description     Unidad de Datos Alfresco
+                               check_command           check_ncpa!-t 'mytoken' -P 5693 -M 'disk/logical/|mnt|datos/used_percent' --warning 90 --critical 95
+                           }
+
+
+
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                              
+                    
+
+                              
+                    
+
 
 
  
