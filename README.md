@@ -110,7 +110,8 @@ sudo docker rmi  71c4992638a2 (poner Image ID: sudo docker image ls)
                        https://localhost:5693/
               si no hemos cambiado el token sera mytoken
 ## Desde naguios el check a usar de libexec es check_ncpa.py
-
+               -Hay algun error en este docker en la ejecucion de este script se soluciona asi:
+                        sudo ln -s /usr/bin/python3 /usr/bin/python
                -Comando para saber el espacio usado de la unidad /mnt/datos del servidro RHEL 6.x:            
                /opt/nagios/libexec/check_ncpa.py -H 172.16.44.72 -t mytoken -M 'disk/logical/|mnt|datos/used_percent' --warning 90 --critical 95
                          OK: Used_percent was 15.50 % | 'used_percent'=15.50%;90;95;
@@ -120,13 +121,19 @@ sudo docker rmi  71c4992638a2 (poner Image ID: sudo docker image ls)
                   -Editrar el fichero commands.cfg y añadir la siguiente linea:
                   
                          nano /opt/nagios/etc/objects/commands.cfg
+                         
                            define command {
                                         command_name    check_ncpa
                                         command_line    $USER1$/check_ncpa.py -H $HOSTADDRESS$ $ARG1$
                                           }
-                    -Añadimos los check para monitorizar Momeria, CPU, discos de un servidor RHEL 6.x
+                                          
+                    -Creamos el siguiente fichero de ejemplo para monitorizar un servidor RHEL
 
-                              nano /opt/nagios/etc/servers/equipoRHEL6x.cfg
+                        nano /opt/nagios/etc/servers/equipoRHEL6x.cfg
+                    
+                    -Añadimos los check para monitorizar Momeria, CPU, discos de un servidor RHEL 6.x
+                                       
+                              
                            
                            define host {
                                host_name               equipoRHEL6x
@@ -176,6 +183,15 @@ sudo docker rmi  71c4992638a2 (poner Image ID: sudo docker image ls)
                                check_command           check_ncpa!-t 'mytoken' -P 5693 -M 'disk/logical/|mnt|datos/used_percent' --warning 90 --critical 95
                            }
 
+
+
+## Comprobaciones que ya ha cogido la configuracion correcamente:
+
+                  nagios -v nagios.cfg
+
+                  Si todo ha ido ok reinciar nagios desde el host:
+
+                  sudo docker restart nagios_nagios_1
 
 
 
