@@ -155,8 +155,9 @@ sudo docker rmi  71c4992638a2 (poner Image ID: sudo docker image ls)
 
 # Monitorizar Servidor Windows en Nagios
 ## Para Monitorizar SRV Windows XX  usaremos el agente nagios NCPA, mejor que el agente NSCP++ mismo procedimeinto que en linux y mismo fichero check de Nagios
+                             https://www.nagios.org/ncpa/archive.php
 
-            ncpa-X.X.X .exe
+                            ncpa-X.X.X .exe
 
 
         2. Creamos una carpeta donde alojaremos el fichero .cfg de maquinas a monitorzar
