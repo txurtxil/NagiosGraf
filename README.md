@@ -80,8 +80,11 @@ sudo docker rmi  71c4992638a2 (poner Image ID: sudo docker image ls)
                    
          -Comando para saber el espacio usado de la unidad /mnt/datos del servidro RHEL 6.x:    
          
-         /opt/nagios/libexec/check_ncpa.py -H IP_SERVIDOR -t mytoken -M 'disk/logical/|mnt|datos/used_percent' --warning 90 --critical 95
+         check_ncpa.py -H IP_SERVIDOR -t mytoken -M 'disk/logical/|mnt|datos/used_percent' --warning 90 --critical 95
                         OK: Used_percent was 15.50 % | 'used_percent'=15.50%;90;95;
+         -Comando para saber el espacio usado de la unidad C: /mnt/datos del servidor Windows:
+           check_ncpa.py -H IP_SERVIDOR -t mytoken -M 'disk/logical/C:|/used_percent' --warning 90 --critical 95
+                        OK: Used_percent was 89.20 % | 'used_percent'=89.20%;90;95;
 
 ## Hablilitar los checks NCPA en Nagios: 
 
