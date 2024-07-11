@@ -70,11 +70,18 @@ sudo docker rmi  71c4992638a2 (poner Image ID: sudo docker image ls)
                        https://localhost:5693/
               si no hemos cambiado el token sera mytoken
 ## Desde naguios el check a usar de libexec es check_ncpa.py
-               -Hay algun error en este docker en la ejecucion de este script se soluciona asi:
-                        sudo ln -s /usr/bin/python3 /usr/bin/python
-               -Comando para saber el espacio usado de la unidad /mnt/datos del servidro RHEL 6.x:            
-               /opt/nagios/libexec/check_ncpa.py -H 172.16.44.72 -t mytoken -M 'disk/logical/|mnt|datos/used_percent' --warning 90 --critical 95
-                         OK: Used_percent was 15.50 % | 'used_percent'=15.50%;90;95;
+        
+         -Hay algun error en este docker en la ejecucion de este script se soluciona asi:
+                   sudo ln -s /usr/bin/python3 /usr/bin/python
+        
+        -Comando para saber los discos que hay en un servidor:
+         
+         check_ncpa.py -H IP_SERVIDOR-t mytoken -M 'disk' --list 
+                   
+         -Comando para saber el espacio usado de la unidad /mnt/datos del servidro RHEL 6.x:    
+         
+         /opt/nagios/libexec/check_ncpa.py -H IP_SERVIDOR -t mytoken -M 'disk/logical/|mnt|datos/used_percent' --warning 90 --critical 95
+                        OK: Used_percent was 15.50 % | 'used_percent'=15.50%;90;95;
 
 ## Hablilitar los checks NCPA en Nagios: 
 
